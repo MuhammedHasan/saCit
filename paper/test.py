@@ -17,6 +17,10 @@ class TestPaperStaticMethods(unittest.TestCase):
     def test__get_xml(self):
         self.assertIsNotNone(Paper._get_xml(self.id))
 
+    def test__is_title_same(self):
+        self.assertTrue(Paper.is_title_same('asd asd asd', 'asd asd asd'))
+        self.assertTrue(Paper.is_title_same('a!!.,,.s!!!..d', 'asd'))
+
 
 class TestPaper(unittest.TestCase):
 
