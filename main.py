@@ -1,5 +1,3 @@
-from parscit import extract_all
+from paper import Paper
 
-open('output.txt', 'w').write(
-    extract_all('a')
-)
+p = Paper('10.1.1.1.1577')
