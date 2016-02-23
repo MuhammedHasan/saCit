@@ -9,7 +9,7 @@ def extract_all(paper_text):
             'docker', 'exec', 'pars',
             'local/parscit/bin/citeExtract.pl',
             '-m', 'extract_all',
-            settings.PARSCIT_CONTAINER_DATA_VOLUME_LOCATION +
+            settings.PARSCIT_CONTAINER_DATA_VOLUME_LOCATION_FOR_CONTAINER +
             '/' + _save_into_docker(paper_text)
         ],
         stdout=subprocess.PIPE)
@@ -23,4 +23,10 @@ def extract_all(paper_text):
 
 
 def _save_into_docker(paper_text):
+    paper_file = open(
+        settings.PARSCIT_CONTAINER_DATA_VOLUME_LOCATION_FOR_HOST + '/' +
+        'paper_text.txt', 'w'
+    )
+    paper_file.write(paper_text)
+
     return 'paper_text.txt'
