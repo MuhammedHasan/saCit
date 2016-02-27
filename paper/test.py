@@ -1,6 +1,7 @@
 import unittest
 from paper import Paper
 import settings
+from crawler import *
 
 
 class TestPaperStaticMethods(unittest.TestCase):
@@ -35,6 +36,12 @@ class TestPaper(unittest.TestCase):
     def test__get_pars(self):
         # TODO : Most logical test ever seen
         self.assertIsNotNone(self.paper._get_pars())
+
+
+class TestCrawler(unittest.TestCase):
+
+    def test__cid_to_paperid(self):
+        self.assertEqual(cid_to_paperid(27950), '10.1.1.1.3294')
 
 if __name__ == '__main__':
     unittest.main()
