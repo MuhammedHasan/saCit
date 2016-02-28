@@ -40,8 +40,16 @@ class TestPaper(unittest.TestCase):
 
 class TestCrawler(unittest.TestCase):
 
-    def test__cid_to_paperid(self):
-        self.assertEqual(cid_to_paperid(27950), '10.1.1.1.3294')
+    def setUp(self):
+        pass
+
+    def test_cid_to_paperid(self):
+        self.assertEqual(cid_to_paperid(595), '10.1.1.13.9939')
+        self.assertEqual(cid_to_paperid(578), '10.1.1.137.3147')
+        self.assertEqual(cid_to_paperid(579), None)
+
+    def test_cids_to_paperids(self):
+        self.assertEqual(len(cids_to_paperids([1, 2, 3])), 3)
 
 if __name__ == '__main__':
     unittest.main()

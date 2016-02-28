@@ -1,5 +1,6 @@
 import urllib2
 from bs4 import BeautifulSoup
+from httplib import BadStatusLine
 
 
 def cid_to_paperid(cid):
@@ -7,7 +8,21 @@ def cid_to_paperid(cid):
         If not it will return None
     '''
     url = 'http://citeseerx.ist.psu.edu/viewdoc/summary?cid=' + str(cid)
-    soup = BeautifulSoup(urllib2.urlopen(url).read(), 'html.parser')
+    html = str()
+    while True:
+        try:
+            html = urllib2.urlopen(url).read()
+            break
+        except urllib2.HTTPError:
+            return None
+        except BadStatusLine:
+            print 'BadStatusLine'
+            continue
+    soup = BeautifulSoup(html, 'html.parser')
     tags = soup.select('#docMenu ul li a')
     if tags:
         return tags[0]['href'].split('doi=')[1]
+
+
+def cids_to_paperids(cids):
+    return [cid_to_paperid(i) for i in cids]
