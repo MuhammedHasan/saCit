@@ -4,9 +4,11 @@ from httplib import BadStatusLine
 
 
 def cid_to_paperid(cid):
-    ''' This function return paperid from cid if exist
+    ''' This function return (cid,paperid) from cid if exist
         If not it will return None
     '''
+    if cid:
+        None
     url = 'http://citeseerx.ist.psu.edu/viewdoc/summary?cid=' + str(cid)
     html = str()
     while True:

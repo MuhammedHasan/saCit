@@ -31,7 +31,7 @@ class TestPaperStaticMethods(unittest.TestCase):
 class TestPaper(unittest.TestCase):
 
     def setUp(self):
-        self.paper = Paper('10.1.1.1.1483')
+        self.paper = Paper('10.1.1.128.9172')
 
     def test__get_pars(self):
         # TODO : Most logical test ever seen
@@ -40,16 +40,18 @@ class TestPaper(unittest.TestCase):
 
 class TestCrawler(unittest.TestCase):
 
-    def setUp(self):
-        pass
-
     def test_cid_to_paperid(self):
         self.assertEqual(cid_to_paperid(595), '10.1.1.13.9939')
         self.assertEqual(cid_to_paperid(578), '10.1.1.137.3147')
-        self.assertEqual(cid_to_paperid(579), None)
+        self.assertIsNone(cid_to_paperid(579), None)
+        self.assertIsNone(cid_to_paperid(0), None)
+        self.assertIsNone(cid_to_paperid(600), None)
 
     def test_cids_to_paperids(self):
-        self.assertEqual(len(cids_to_paperids([1, 2, 3])), 3)
+        self.assertEqual(
+            cids_to_paperids([595, 578, 579]),
+            ['10.1.1.13.9939', '10.1.1.137.3147', None]
+        )
 
 if __name__ == '__main__':
     unittest.main()

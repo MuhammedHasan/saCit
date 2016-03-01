@@ -10,13 +10,19 @@ class Paper:
 
     def __init__(self, id):
         self.id = id
-        self.text = Paper._get_text(id)
+        # self.text = Paper._get_text(id)
         self.xml = xmltodict.parse(Paper._get_xml(id))
-        self.pars = xmltodict.parse(self._get_pars())
+        # self.pars = xmltodict.parse(self._get_pars())
 
     @property
     def xml_citations(self):
-        return self.xml['document']['citations']['citation']
+        if self.xml['document'].get('citations'):
+            if self.xml['document']['citations'].get('citation'):
+                citations = self.xml['document']['citations']['citation']
+                if type(citations) != list:
+                    return [citations]
+                return citations
+        return list()
 
     @property
     def pars_citations(self):
