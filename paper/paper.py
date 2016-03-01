@@ -4,15 +4,16 @@ import settings
 import extract
 from difflib import SequenceMatcher
 from bs4 import BeautifulSoup
+from helper import *
 
 
 class Paper:
 
     def __init__(self, id):
         self.id = id
-        # self.text = Paper._get_text(id)
+        self.text = Paper._get_text(id)
         self.xml = xmltodict.parse(Paper._get_xml(id))
-        # self.pars = xmltodict.parse(self._get_pars())
+        self.pars = xmltodict.parse(self._get_pars())
 
     @property
     def xml_citations(self):
@@ -25,10 +26,29 @@ class Paper:
         return list()
 
     @property
+    def cid(self):
+        try:
+            return self.xml['document'].get('clusterid')
+        except urllib2.HTTPError:
+            return None
+
+    @property
+    def title(self):
+        return self.xml['document']['title']
+
+    @property
+    def abstract(self):
+        return self.xml['document']['abstract']
+
+    @property
+    def year(self):
+        return self.xml['document']['year']
+
+    @property
     def pars_citations(self):
         algs = self.pars['algorithms']['algorithm']
         for i in algs:
-            if 'citationList' in i.keys():
+            if i.get('citationList'):
                 return i['citationList']['citation']
         return list()
 
@@ -68,21 +88,27 @@ class Paper:
             return 1
         return SequenceMatcher(None, pars_raw, xml_raw).ratio()
 
-    def find_title_of_pars_citation(self, pars_raw):
+    def find_cid_of_pars_citation(self, pars_raw):
         max_match = 0.6
-        matching_title = None
+        cid = None
         for i in self.xml_citations:
-            if i.get('paperid') and i.get('title'):
+            if i.get('paperid') and i.get('title') and i.get('clusterid'):
                 sim = Paper.is_citation_same(i['raw'], pars_raw)
                 if sim > max_match:
-                    max_match, matching_title = sim, i['title']
-        return matching_title
+                    max_match, cid = sim, i['clusterid']
+        return cid
 
-    def get_ids_and_contexts_of_citation(self, doi_title):
-        ids = list()
-        for i in self.pars_citations:
-            title = self.find_title_of_pars_citation(i)
-            paper_id = filter(lambda x: x['title'] == title, doi_title)
-            if paper_id:
-                ids.append(paper_id[0]['doi'])
-        return ids
+    def find_all_cid_of_pars_citation(self):
+        cid_context = list()
+        for i in if_not_list_make_list(self.pars_citations):
+            if i.get('contexts') and i.get('rawString') and i.get('@valid'):
+                cid = self.find_cid_of_pars_citation(i['rawString'])
+                if cid:
+                    for j in if_not_list_make_list(i['contexts']):
+                        if j.get('context'):
+                            ctx = list()
+                            for z in if_not_list_make_list(j['context']):
+                                if z.get('#text'):
+                                    ctx.append(z['#text'])
+                            cid_context.append((cid, ctx))
+        return cid_context
