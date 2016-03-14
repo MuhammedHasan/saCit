@@ -1,48 +1,19 @@
 import urllib2
-import xmltodict
 import settings
 import extract
 from difflib import SequenceMatcher
-from bs4 import BeautifulSoup
 from helper import *
+from pymongo import MongoClient
+import xmltodict
+from textblob import TextBlob
 
 
 class Paper:
 
     def __init__(self, id):
-        self.id = id
-        self.text = Paper._get_text(id)
-        self.xml = xmltodict.parse(Paper._get_xml(id))
+        collection = Paper._create_connection()
+        self.mongo = collection.find_one({'@id': id})
         self.pars = xmltodict.parse(self._get_pars())
-
-    @property
-    def xml_citations(self):
-        if self.xml['document'].get('citations'):
-            if self.xml['document']['citations'].get('citation'):
-                citations = self.xml['document']['citations']['citation']
-                if type(citations) != list:
-                    return [citations]
-                return citations
-        return list()
-
-    @property
-    def cid(self):
-        try:
-            return self.xml['document'].get('clusterid')
-        except urllib2.HTTPError:
-            return None
-
-    @property
-    def title(self):
-        return self.xml['document']['title']
-
-    @property
-    def abstract(self):
-        return self.xml['document']['abstract']
-
-    @property
-    def year(self):
-        return self.xml['document']['year']
 
     @property
     def pars_citations(self):
@@ -52,31 +23,28 @@ class Paper:
                 return i['citationList']['citation']
         return list()
 
-    @staticmethod
-    def _id_to_path(id, type_doc):
-        ''' type_doc get 'xml' or 'text' input '''
-        return settings.DATA_HOST + type_doc + '/' + id.replace('.', '/') + '/'
-
-    @staticmethod
-    def _get_text(id):
-        url = Paper._id_to_path(id, 'text') + id + '.txt'
-        return urllib2.urlopen(url).read()
-
-    @staticmethod
-    def _get_xml_last_version(id):
-        url = Paper._id_to_path(id, 'xml')
-        html = urllib2.urlopen(url).read()
-        soup = BeautifulSoup(html, 'html.parser')
-        return soup.select('a')[-1]['href']
-
-    @staticmethod
-    def _get_xml(id):
-        last_version = Paper._get_xml_last_version(id)
-        url = Paper._id_to_path(id, 'xml') + last_version
-        return urllib2.urlopen(url).read()
+    @property
+    def mongo_citations(self):
+        if self.mongo.get('citations'):
+            if self.mongo['citations'].get('citation'):
+                citations = self.mongo['citations']['citation']
+                return if_not_list_make_list(citations)
+        return list()
 
     def _get_pars(self):
-        return extract.extract_all(self.text)
+        return extract.extract_all(self.mongo['text'])
+
+    @staticmethod
+    def _create_connection():
+        client = MongoClient(settings.MONGO_HOST_IP)
+        db = client[settings.MONGO_DATABASE_NAME]
+        return db[settings.MONGO_COLLECTION_NAME]
+
+    @staticmethod
+    def _cid_to_paper_id(cid):
+        collection = Paper._create_connection()
+        paper = collection.find_one({'clusterid': cid})
+        return paper.get('@id') if paper else None
 
     @staticmethod
     def is_citation_same(pars_raw, xml_raw):
@@ -91,8 +59,8 @@ class Paper:
     def find_cid_of_pars_citation(self, pars_raw):
         max_match = 0.6
         cid = None
-        for i in self.xml_citations:
-            if i.get('paperid') and i.get('title') and i.get('clusterid'):
+        for i in self.mongo_citations:
+            if i.get('raw') and i.get('clusterid'):
                 sim = Paper.is_citation_same(i['raw'], pars_raw)
                 if sim > max_match:
                     max_match, cid = sim, i['clusterid']
@@ -112,3 +80,21 @@ class Paper:
                                     ctx.append(z['#text'])
                             cid_context.append((cid, ctx))
         return cid_context
+
+    def find_all_id_of_pars_citation(self):
+        id_of_pars_citation = [
+            (Paper._cid_to_paper_id(k), v)
+            for k, v in self.find_all_cid_of_pars_citation()
+            if k or v
+        ]
+        return filter(lambda x: x[0] and x[1], id_of_pars_citation)
+
+    def get_centiment_with_paperid(self):
+        return [(k, Paper._calc_sent_each_context(v))
+                for k, v in self.find_all_id_of_pars_citation()]
+
+    @staticmethod
+    def _calc_sent_each_context(contexts):
+        return sum(
+            [TextBlob(c).sentiment.polarity for c in contexts]
+        ) / float(len(contexts))

@@ -27,6 +27,6 @@ def _save_into_docker(paper_text):
         settings.PARSCIT_CONTAINER_DATA_VOLUME_LOCATION_FOR_HOST + '/' +
         'paper_text.txt', 'w'
     )
-    paper_file.write(paper_text)
+    paper_file.write(paper_text.encode('utf-8'))
 
     return 'paper_text.txt'
