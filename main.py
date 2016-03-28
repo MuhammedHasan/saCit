@@ -19,13 +19,14 @@ result_f.close()
 
 paper_ids = list(paper_ids)
 
+
 # def job(paper_id):
-#     result_f = open('result', 'a')
-#     error_f = open('error-log', 'a')
-#     p = Paper(paper_id)
-#     result_f.write(str(
-#         '%s\n' % str({paper_id: p.get_centiment_with_paperid()})
-#     ))
+#    result_f = open('result', 'a')
+#    error_f = open('error-log', 'a')
+#    p = Paper(paper_id)
+#    result_f.write(str(
+#        '%s\n' % str({paper_id: p.get_centiment_with_paperid()})
+#    ))
 
 
 def job(paper_id):
@@ -41,4 +42,4 @@ def job(paper_id):
 
 
 num_cores = multiprocessing.cpu_count()
-Parallel(n_jobs=num_cores)(delayed(job)(i) for i in paper_ids[:100])
+Parallel(n_jobs=num_cores)(delayed(job)(i) for i in paper_ids)
