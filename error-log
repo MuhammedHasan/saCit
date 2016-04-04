@@ -486,3 +486,104 @@
 10.1.1.60.662	
 10.1.1.391.6801	not well-formed (invalid token): line 1279, column 34
 10.1.1.18.5901	not well-formed (invalid token): line 885, column 69
+10.1.1.454.9515	
+10.1.1.218.7186	not well-formed (invalid token): line 1289, column 50
+10.1.1.461.3837	not well-formed (invalid token): line 1181, column 29
+10.1.1.85.4222	not well-formed (invalid token): line 1035, column 39
+10.1.1.23.5063	
+10.1.1.65.6176	
+10.1.1.510.3142	
+10.1.1.490.8009	
+10.1.1.562.3642	
+10.1.1.578.616	
+10.1.1.38.9612	not well-formed (invalid token): line 1721, column 63
+10.1.1.63.7911	
+10.1.1.212.4456	not well-formed (invalid token): line 736, column 46
+10.1.1.39.7163	
+10.1.1.16.4793	not well-formed (invalid token): line 471, column 30
+10.1.1.476.9838	
+10.1.1.36.5834	'unicode' object has no attribute 'get'
+10.1.1.34.7771	not well-formed (invalid token): line 446, column 36
+10.1.1.161.3654	'unicode' object has no attribute 'get'
+10.1.1.161.6145	'unicode' object has no attribute 'get'
+10.1.1.578.7937	
+10.1.1.473.2905	
+10.1.1.280.4589	not well-formed (invalid token): line 783, column 31
+10.1.1.33.8018	not well-formed (invalid token): line 576, column 28
+10.1.1.467.1132	
+10.1.1.578.9982	
+10.1.1.470.2230	
+10.1.1.48.3209	
+10.1.1.464.9350	
+10.1.1.473.7286	
+10.1.1.162.1862	
+10.1.1.45.2849	not well-formed (invalid token): line 676, column 30
+10.1.1.490.1065	
+10.1.1.22.4179	not well-formed (invalid token): line 8299, column 29
+10.1.1.17.3081	not well-formed (invalid token): line 943, column 59
+10.1.1.131.1009	not well-formed (invalid token): line 2389, column 58
+10.1.1.23.2000	not well-formed (invalid token): line 2516, column 49
+10.1.1.45.3716	not well-formed (invalid token): line 1787, column 51
+10.1.1.469.9008	
+10.1.1.458.6288	
+10.1.1.28.8481	not well-formed (invalid token): line 940, column 62
+10.1.1.470.682	not well-formed (invalid token): line 297, column 29
+10.1.1.26.3846	not well-formed (invalid token): line 717, column 72
+10.1.1.45.1594	not well-formed (invalid token): line 4275, column 28
+10.1.1.464.6672	
+10.1.1.387.3752	
+10.1.1.54.9160	not well-formed (invalid token): line 1017, column 39
+10.1.1.489.6525	
+10.1.1.465.6985	
+10.1.1.56.7989	
+10.1.1.57.5720	
+10.1.1.86.7289	
+10.1.1.18.9933	not well-formed (invalid token): line 2537, column 29
+10.1.1.470.1054	not well-formed (invalid token): line 128, column 29
+10.1.1.491.8197	
+10.1.1.469.9940	
+10.1.1.217.6254	not well-formed (invalid token): line 516, column 43
+10.1.1.484.3197	
+10.1.1.57.3221	not well-formed (invalid token): line 228, column 30
+10.1.1.472.3691	
+10.1.1.472.8407	
+10.1.1.459.4403	
+10.1.1.474.1699	
+10.1.1.333.2144	
+10.1.1.330.1927	not well-formed (invalid token): line 922, column 30
+10.1.1.509.8277	not well-formed (invalid token): line 1021, column 58
+10.1.1.8.2364	not well-formed (invalid token): line 2290, column 29
+10.1.1.48.751	not well-formed (invalid token): line 787, column 51
+10.1.1.456.8769	
+10.1.1.472.6358	
+10.1.1.519.8775	
+10.1.1.157.2284	not well-formed (invalid token): line 1234, column 38
+10.1.1.510.1693	
+10.1.1.578.9521	
+10.1.1.515.4355	
+10.1.1.126.6351	
+10.1.1.466.3161	not well-formed (invalid token): line 2252, column 34
+10.1.1.512.7639	
+10.1.1.103.2386	not well-formed (invalid token): line 822, column 46
+10.1.1.54.292	
+10.1.1.43.1397	not well-formed (invalid token): line 1370, column 29
+10.1.1.38.5967	
+10.1.1.110.1051	
+10.1.1.33.5582	not well-formed (invalid token): line 3737, column 54
+10.1.1.44.8755	
+10.1.1.71.297	
+10.1.1.44.8417	
+10.1.1.32.9378	not well-formed (invalid token): line 1249, column 69
+10.1.1.467.5867	not well-formed (invalid token): line 583, column 29
+10.1.1.7.4399	not well-formed (invalid token): line 1136, column 29
+10.1.1.498.8759	
+10.1.1.33.529	not well-formed (invalid token): line 1231, column 28
+10.1.1.497.2629	
+10.1.1.363.9753	not well-formed (invalid token): line 1989, column 30
+10.1.1.63.5264	
+10.1.1.269.4496	
+10.1.1.48.2128	not well-formed (invalid token): line 4910, column 30
+10.1.1.37.114	not well-formed (invalid token): line 2299, column 29
+10.1.1.30.7383	not well-formed (invalid token): line 640, column 63
+10.1.1.484.2814	
+10.1.1.475.5579	
